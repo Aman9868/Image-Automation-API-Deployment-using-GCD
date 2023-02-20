@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+Uploads
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+
+        <h1>Upload Image</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+
+        </form>
+    <br><br>
+    <div>
+     <a href="/trynew" >
+         <button style="background-color:#8A2BE2;color:white; padding: 10px 15px">Try Some New. </button></a></div>
+</div>
+{% endblock %}

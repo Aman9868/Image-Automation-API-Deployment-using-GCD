@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+Images
+{% endblock %}
+{% block content %}
+<h1>Visual Question Answering</h1>
+  <form method="post" enctype="multipart/form-data">
+    <label for="image">Upload Image:</label>
+    <input type="file" id="image" name="image" required>
+    <br>
+    <label for="question">Enter Question:</label>
+    <input type="text" id="question" name="question" required>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
