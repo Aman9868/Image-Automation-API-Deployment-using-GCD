@@ -82,6 +82,16 @@ To deploy this follow these steps:
 
 
 ## Demo
+1. Object Detection
+
+![Screenshot_2023-01-16_163640](https://user-images.githubusercontent.com/60923869/220245625-51f097a2-793f-4521-97a3-991144de81a5.jpg)
+
+2. Panoptic Segmentation
+
+![14](https://user-images.githubusercontent.com/60923869/220246409-20731aba-0ccb-4b7d-a119-dff8ae10dfeb.jpg)
+
+
+
 
 
 
