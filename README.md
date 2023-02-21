@@ -73,12 +73,12 @@ To deploy this follow these steps:
 
 
 ## Screenshots
+![Screenshot 2023-02-21 095906](https://user-images.githubusercontent.com/60923869/220248248-5f9a16e9-2eef-4256-bcb8-6f79b961232a.png)
+
+![Screenshot 2023-02-21 100001](https://user-images.githubusercontent.com/60923869/220248265-37c52a9c-2910-40ed-b046-55ec70c6a8e8.png)
 
 
 
-## Authors
-
-- [@Aman9868](https://www.github.com/Aman9868)
 
 
 ## Demo
@@ -89,6 +89,13 @@ To deploy this follow these steps:
 2. Panoptic Segmentation
 
 ![14](https://user-images.githubusercontent.com/60923869/220246409-20731aba-0ccb-4b7d-a119-dff8ae10dfeb.jpg)
+
+
+
+## Authors
+
+- [@Aman9868](https://www.github.com/Aman9868)
+
 
 
 
