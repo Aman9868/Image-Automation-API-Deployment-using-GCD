@@ -1,7 +1,7 @@
 
 # Image Automation
 
-The project focuses on automates the images with the helpo of Computer Vision & Deep Learning.
+The project focuses on automates the images with the help of Computer Vision & Deep Learning.
 
 The objective of the projects is to automates task like:
 
