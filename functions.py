@@ -1,7 +1,6 @@
 import re
 
-
-def extract_contact_info(text):
+def extracts_contact_info(text):
     # Regular expression pattern to match email addresses in the input text
     email_pattern = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
 
