@@ -10,3 +10,6 @@ def project_page():
 @app.route("/about")
 def about_page():
     return render_template('about.html')
+@app.route('/base')
+def base_page():
+    return render_template('base.html')
