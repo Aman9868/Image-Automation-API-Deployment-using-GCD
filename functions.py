@@ -55,3 +55,37 @@ def extracts_contact_info(text):
 
     # Return a dictionary containing the extracted contact information
     return {"email": email, "mobile": mobile, "address": address, "city": city, "country": country}
+
+
+################-----------------First to third person------------------------------------##############
+def first_to_third_person(sentence):
+    # split sentence into words
+    words = sentence.split()
+
+    # list of pronouns to replace
+    first_person_pronouns = ['I', 'me', 'my', 'mine', 'we', 'us', 'our', 'ours']
+
+    # dictionary of replacements
+    replacements = {
+        'I': 'he' if random.randint(0, 1) == 0 else 'she',
+        'me': 'him' if random.randint(0, 1) == 0 else 'her',
+        'my': 'his' if random.randint(0, 1) == 0 else 'her',
+        'mine': 'his' if random.randint(0, 1) == 0 else 'hers',
+        'we': 'they',
+        'us': 'them',
+        'our': 'their',
+        'ours': 'theirs'
+    }
+
+    # iterate through words, replacing first person pronouns with third person
+    new_words = []
+    for word in words:
+        if word in first_person_pronouns:
+            new_words.append(replacements[word])
+        else:
+            new_words.append(word)
+
+    # join words back into a sentence
+    new_sentence = ' '.join(new_words)
+
+    return new_sentence
