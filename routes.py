@@ -7,3 +7,6 @@ def home_page():
 @app.route("/projects")
 def project_page():
     return render_template('projects.html')
+@app.route("/about")
+def about_page():
+    return render_template('about.html')
