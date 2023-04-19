@@ -301,6 +301,11 @@ def analyze():
         t1="Text Translation"
         t2=translate_text(finaltext)
         return render_template('analyze.html',purpose=t1,analyzed_text=t2)
+    #####-------------Contact Inforation Extractor --------------------########
+    elif (exname=="on"):
+        param22=extract_contact_info(finaltext)
+        param23 = 'Extract Contact Information'
+        return render_template('analyze.html', purpose=param23, analyzed_text=param22)
     else :
         return "Error"
 app.run(debug=True)
