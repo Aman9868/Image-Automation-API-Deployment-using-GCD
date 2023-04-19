@@ -3,8 +3,10 @@ from flask import render_template,request,redirect,url_for, flash,jsonify
 import torch
 from numba import cuda
 from GPUtil import showUtilization as gpu_usage
-from forms import RegisterForm
+from functions import extract_contact_info,extract_airport_codes,first_to_third_person,translate_text
+from forms import RegisterForm,LoginForm
 from models import User
+from flask_login import login_user,logout_user,current_user, login_required
 
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
@@ -67,5 +69,21 @@ def register_page():
             flash(f'There was an error with creating a user: {err}', category='danger')
     return render_template('register.html',form=form)
 
+#####-----------------------Login Page-----------------------------------#######
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    if current_user.is_authenticated:
+        return redirect(url_for('home_page'))
+    form = LoginForm()
+    if form.validate_on_submit():
+       user = User.query.filter_by(email=form.email.data).first()
+       if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            flash('You have been logged in!', 'success')
+            return redirect(next_page) if next_page else redirect(url_for('home_page'))
+       else:
+            flash('Email and password are not match! Please try again', category='danger')
 
+    return render_template('login.html', form=form)
 app.run(debug=True)
