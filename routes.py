@@ -273,6 +273,12 @@ def analyze():
         param8='Token Classification'
         param9=tokenclass(finaltext)
         return render_template('analyze.html', purpose=param8, analyzed_text=param9)
+    #####------------------------Fill Mask-----------------------------------------#####
+    elif (mask=="on"):
+        classifier = pipeline("fill-mask")
+        items=classifier(finaltext)
+        param13='Fill Mask'
+        return render_template('analyze2.html', purpose=param13, items=items)
     else :
         return "Error"
 app.run(debug=True)
