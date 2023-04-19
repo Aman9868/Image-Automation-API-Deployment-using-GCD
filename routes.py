@@ -21,6 +21,9 @@ from flair.data import Sentence
 from flair.models import SequenceTagger
 from PIL import Image, ImageDraw
 from keras_cv.models import StableDiffusion
+import soundfile as sf
+from transformers import AutoModelWithLMHead, AutoTokenizer,SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
+from datasets import load_dataset
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -320,6 +323,20 @@ def analyze():
         img=model.text_to_image(finaltext)
         img=Image.fromarray(img[0]).save('static/output/output.jpg')
         return render_template("analyze.html", img_filename='output.jpg')
+    ###############------------------Text to Speech----------------------#######
+    elif (sde=="on"):
+         processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_tts")
+         model = SpeechT5ForTextToSpeech.from_pretrained("microsoft/speecht5_tts")
+         vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan")
+         inputs = processor(text=finaltext, return_tensors="pt")
+         # load xvector containing speaker's voice characteristics from a dataset
+         embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
+         speaker_embeddings = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(0)
+         speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
+         speech_np = speech.squeeze().numpy()
+         sf.write("static/output/output.wav",speech_np, samplerate=16000) 
+         tt=" Text to Speech"
+         return render_template('sound.html',audio_path=url_for('static', filename='output/output.wav'))
     else :
         return "Error"
 app.run(debug=True)
