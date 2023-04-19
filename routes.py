@@ -7,6 +7,7 @@ from functions import extract_contact_info,extract_airport_codes,first_to_third_
 from forms import RegisterForm,LoginForm
 from models import User
 from flask_login import login_user,logout_user,current_user, login_required
+from flask_mail import Message
 
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
@@ -93,5 +94,16 @@ def logout_page():
     flash("You have been logged out!", category='info')
     return redirect(url_for("home_page"))
 
+############------------------------------RESET PASSWORD------------------------------#############
 
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
 app.run(debug=True)
