@@ -168,4 +168,29 @@ def subscribe():
 @app.route("/tryitout")
 def tryit():
     return render_template('tryitout.html')
+
+############----------------Requesting-------------------------------#############
+#############--------------------------Analyze Text--------------------------------------######
+@app.route("/analyze")
+def analyze():
+    finaltext = request.args.get('text', 'default') # text variable request
+    removestop = request.args.get('removestop','off') # stopword request
+    removepunc = request.args.get('removepunc', 'off') # punctutaion request
+    mask = request.args.get('mask', 'off')
+    sentiment = request.args.get('sentiment', 'off')
+    spell = request.args.get('spell', 'off')
+    summary=request.args.get('summary','off') # text summary request
+    token = request.args.get('token', 'off')
+    generate=request.args.get('generate','off')
+    que=request.args.get('que','off')
+    person = request.args.get('person', 'off') # third person convert request
+    exname=request.args.get('exname','off')
+    acode=request.args.get('acode','off')
+    sqr=request.args.get('sqr','off')
+    grmr=request.args.get('grmr','off') # grammear corrector request
+    timage=request.args.get('timage','off')
+    vimage=request.args.get('vimage','off')
+    trans=request.args.get('trans','off') # Text translation request
+    paras=request.args.get('paras','off')
+    sde=request.args.get('sde','off')  # Text to speech request
 app.run(debug=True)
