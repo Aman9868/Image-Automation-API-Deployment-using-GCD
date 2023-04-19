@@ -24,6 +24,7 @@ from keras_cv.models import StableDiffusion
 import soundfile as sf
 from transformers import AutoModelWithLMHead, AutoTokenizer,SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
 from datasets import load_dataset
+from parrot import Parrot
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -337,6 +338,15 @@ def analyze():
          sf.write("static/output/output.wav",speech_np, samplerate=16000) 
          tt=" Text to Speech"
          return render_template('sound.html',audio_path=url_for('static', filename='output/output.wav'))
+    ###################-----------------Text Paraphrase-----------------------############3
+    elif(paras=="on"):
+        t3="Text Paraphrase"
+        parrot = Parrot()
+        t4=parrot.augment(finaltext)
+        print(t4)
+        data=[{"text":text,'score':score} for text,score in t4]
+        print(data)
+        return render_template('yol.html',data=data)
     else :
         return "Error"
 app.run(debug=True)
