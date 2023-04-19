@@ -164,4 +164,8 @@ def subscribe():
     mail.send(msg)
     flash('Thank you for subscribing to our newsletter!', 'success')
     return redirect(url_for('home_page'))
+ #####----------------Selection of Text Service Page-------------------------###########
+@app.route("/tryitout")
+def tryit():
+    return render_template('tryitout.html')
 app.run(debug=True)
