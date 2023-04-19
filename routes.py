@@ -253,6 +253,13 @@ def analyze():
         param10=res['label']
         param11='Sentiment Analysis'
         return render_template('analyze.html', purpose=param11, analyzed_text=param10)
+    ######------------------------Text Summarization----------------------------------------####
+    elif (summary=="on"):
+        summary_length = int(request.args.get('summary_length'))
+        summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+        sm = summarizer(finaltext, max_length=summary_length, min_length=summary_length-30 ,do_sample=False)[0]['summary_text']
+        param7='Summarizer'
+        return render_template('analyze.html', purpose=param7, analyzed_text=sm)
     else :
         return "Error"
 app.run(debug=True)
