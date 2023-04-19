@@ -89,7 +89,37 @@ def translate_text(text):
     translator=translate.Translator(to_lang=target_lang)
     transl=translator.translate(text_trans)
     return transl
+def translat_text(text):
+    target_language='en'
+    text=text.lower()
+    if 'into french' in text:
+        target_language='fr'
+    elif 'into german' in text:
+        target_language='de'
+    elif 'into hindi' in text:
+        target_language='hi'
+    elif 'into german' in text:
+        target_language='de'
+    elif 'into punjabi' in text:
+        target_language='pa'
+    elif 'into chinese' in text:
+        target_language='zh-cn'
+    elif 'into urdu' in text:
+        target_language='ur'
+    else:
+        target_language=detect(text)
+    key_ls=['translate','convert']
+    for i in key_ls:
+        if i in text:
+            index=text.find(i)
+            text_to=text[index + len(i):].strip()
+            break
+    else :
+        return "Invalid Input"
 
+    translator=translate.Translator(to_lang=target_language)
+    translation=translator.translate(text_to)
+    return translation
 
 ################-----------------First to third person------------------------------------##############
 def first_to_third_person(sentence):
