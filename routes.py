@@ -296,6 +296,11 @@ def analyze():
         param19='Third Person Convertor'
         param18 = first_to_third_person(finaltext)
         return render_template('analyze.html',purpose=param19,analyzed_text=param18)
+    ##############-------------------Text Translation----------------------------###########
+    elif (trans=="on"):
+        t1="Text Translation"
+        t2=translate_text(finaltext)
+        return render_template('analyze.html',purpose=t1,analyzed_text=t2)
     else :
         return "Error"
 app.run(debug=True)
