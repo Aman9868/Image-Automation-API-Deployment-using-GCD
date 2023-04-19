@@ -8,6 +8,9 @@ from forms import RegisterForm,LoginForm,RequestResetForm,ResetPasswordForm
 from models import User
 from flask_login import login_user,logout_user,current_user, login_required
 from flask_mail import Message
+from stop_words import get_stop_words
+import nltk
+from nltk.tokenize import word_tokenize
 
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
@@ -193,4 +196,16 @@ def analyze():
     trans=request.args.get('trans','off') # Text translation request
     paras=request.args.get('paras','off')
     sde=request.args.get('sde','off')  # Text to speech request
+
+    ### ---------------------------Stopwords Removal-------------------------------#####
+    if removestop == "on":
+        stop_words = get_stop_words('en')
+        word_tokens = word_tokenize(finaltext)
+        filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
+        result=' '.join([i for i in filtered_sentence])
+        params1 = 'Removed Stopwords'
+        params2=result
+        return render_template('analyze.html',purpose=params1,analyzed_text=params2)
+    else :
+        return "Error"
 app.run(debug=True)
