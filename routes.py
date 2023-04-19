@@ -14,6 +14,7 @@ from nltk.tokenize import word_tokenize
 from diffusers import LDMSuperResolutionPipeline,DPMSolverMultistepScheduler,DiffusionPipeline,StableDiffusionPipeline
 import os
 import cv2
+from string import punctuation
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -229,6 +230,13 @@ def analyze():
         video_writer.release()
 
         return render_template('analyze.html', video_path=output_file)
+    ####--------------------------------Remove Punctuations------------------------------#####
+    elif (removepunc == "on"):
+        def strip_punctuation(s):
+            return ''.join(c for c in s if c not in punctuation)
+        params4 = strip_punctuation(finaltext)
+        params3='Remove Punctuations'
+        return render_template('analyze.html', purpose=params3, analyzed_text=params4)
     else :
         return "Error"
 app.run(debug=True)
