@@ -291,6 +291,11 @@ def analyze():
             text_output.append(line)
         res="".join(text_output)
         return render_template('analyze.html', purpose=param14, analyzed_text=res)
+    ######-------------------Third Person Convertor--------------------------------######################
+    elif (person=="on"):
+        param19='Third Person Convertor'
+        param18 = first_to_third_person(finaltext)
+        return render_template('analyze.html',purpose=param19,analyzed_text=param18)
     else :
         return "Error"
 app.run(debug=True)
