@@ -279,6 +279,18 @@ def analyze():
         items=classifier(finaltext)
         param13='Fill Mask'
         return render_template('analyze2.html', purpose=param13, items=items)
+    #######----------------------Text Generation-----------------------------------####
+    elif (generate=="on"):
+        generator = pipeline('text-generation', model='gpt2')
+        param14='Text Generation'
+        param15=generator(finaltext,num_return_sequences=3)
+        print(param15)
+        text_output = []
+        for i, text_dict in enumerate(param15):
+            line = f" {i + 1}: {text_dict['generated_text'] }"
+            text_output.append(line)
+        res="".join(text_output)
+        return render_template('analyze.html', purpose=param14, analyzed_text=res)
     else :
         return "Error"
 app.run(debug=True)
