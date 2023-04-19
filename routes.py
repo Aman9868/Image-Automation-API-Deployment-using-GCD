@@ -16,6 +16,7 @@ import os
 import cv2
 from textblob import Word
 from string import punctuation
+from transformers import pipeline,AutoTokenizer, AutoModelForQuestionAnswering
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -245,6 +246,13 @@ def analyze():
         param5 = 'Spell Check'
         params6=check
         return render_template('analyze.html', purpose=param5, analyzed_text=params6)
+    ########-------------------------Sentiment Analysis-----------------------------######
+    elif (sentiment=="on"):
+        sent = pipeline('sentiment-analysis')
+        res=sent(finaltext)[0]
+        param10=res['label']
+        param11='Sentiment Analysis'
+        return render_template('analyze.html', purpose=param11, analyzed_text=param10)
     else :
         return "Error"
 app.run(debug=True)
