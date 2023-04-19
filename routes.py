@@ -138,4 +138,20 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('login_page'))
     return render_template('res_token.html', title='Reset Password', form=form)
+############3--------------------Contact Page---------------------------------------################3
+@app.route("/contact", methods=['GET', 'POST'])
+def contact_page():
+    if request.method=="POST":
+        name=request.form.get('inputName4')
+        email=request.form.get('inputEmail4')
+        mobile=request.form.get('inputNumber4')
+        message=request.form.get('inputMessage')
+        service=request.form.get('inputState')
+        msg= Message(subject=f'Mail from {name}',
+                     body=f'Name : {name}\nEmail from :{email}\nMobile : {mobile}\nMessage : {message}\nService he wants :{service}',
+                     sender=email,recipients=['itsaman9868@gmail.com'])
+        mail.send(msg)
+        flash('Your message has been sent successfully!', 'success')
+        return redirect(url_for('contact_page'))
+    return render_template('contact.html')
 app.run(debug=True)
