@@ -17,6 +17,8 @@ import cv2
 from textblob import Word
 from string import punctuation
 from transformers import pipeline,AutoTokenizer, AutoModelForQuestionAnswering
+from flair.data import Sentence
+from flair.models import SequenceTagger
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -260,6 +262,17 @@ def analyze():
         sm = summarizer(finaltext, max_length=summary_length, min_length=summary_length-30 ,do_sample=False)[0]['summary_text']
         param7='Summarizer'
         return render_template('analyze.html', purpose=param7, analyzed_text=sm)
+    #####---------------- Token Classifictaion----------------------------------------####
+    elif (token=="on"):
+        def tokenclass(text):
+            tagger = SequenceTagger.load("flair/ner-english")  # Load the NER Tagger
+            sentence = Sentence(text)  # Make a Sentence
+            res = tagger.predict(sentence)  # Run NER over Sentence
+            rs = sentence.get_spans('ner')  # Print NER tag
+            return rs
+        param8='Token Classification'
+        param9=tokenclass(finaltext)
+        return render_template('analyze.html', purpose=param8, analyzed_text=param9)
     else :
         return "Error"
 app.run(debug=True)
