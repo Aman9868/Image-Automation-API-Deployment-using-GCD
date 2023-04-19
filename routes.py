@@ -154,4 +154,14 @@ def contact_page():
         flash('Your message has been sent successfully!', 'success')
         return redirect(url_for('contact_page'))
     return render_template('contact.html')
+
+#####------------------------Subscribe Channel----------------------------------#############
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    email = request.form.get('email')
+    msg = Message('Newsletter Subscription',sender=email ,recipients=['itsaman9868@gmail.com'])
+    msg.body = 'Thank you for subscribing to our newsletter!'
+    mail.send(msg)
+    flash('Thank you for subscribing to our newsletter!', 'success')
+    return redirect(url_for('home_page'))
 app.run(debug=True)
