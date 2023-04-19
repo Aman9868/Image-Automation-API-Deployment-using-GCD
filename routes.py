@@ -359,6 +359,16 @@ def analyze():
         param32=tokenizer.decode(output[0])
         param33 = 'SQL Generator'
         return render_template('analyze.html', purpose=param33, analyzed_text=param32)
+    #############------Grammar Correction-----------------------------#########
+    elif (grmr=="on"):
+        corrector = pipeline(
+              'text2text-generation',
+              'pszemraj/flan-t5-large-grammar-synthesis',
+              )
+        results = corrector(finaltext)
+        param35 = 'Grammar Corrector'
+        param34 = results[0]['generated_text']
+        return render_template('analyze.html', purpose=param35, analyzed_text=param34)
     else :
         return "Error"
 app.run(debug=True)
