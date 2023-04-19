@@ -369,6 +369,25 @@ def analyze():
         param35 = 'Grammar Corrector'
         param34 = results[0]['generated_text']
         return render_template('analyze.html', purpose=param35, analyzed_text=param34)
+    ########-------------------Questionn Answering------------------------------#####
+    elif (que=="on"):
+        
+        # Split the input into question and context
+        input_list = finaltext.strip().split(' ', 1)
+        question = input_list[0] + ' '
+        context = input_list[1]
+        model_name = 'distilbert-base-cased-distilled-squad'
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForQuestionAnswering.from_pretrained(model_name)
+        qa_pipeline = pipeline('question-answering', model=model, tokenizer=tokenizer)
+        result = qa_pipeline({
+            'question': question,
+            'context': context
+        })
+        answer = result['answer']
+        param37="Question Answering"
+        print(answer)
+        return render_template('analyze.html', purpose=param37, analyzed_text=answer)
     else :
         return "Error"
 app.run(debug=True)
