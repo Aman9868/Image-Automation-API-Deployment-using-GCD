@@ -14,6 +14,7 @@ from nltk.tokenize import word_tokenize
 from diffusers import LDMSuperResolutionPipeline,DPMSolverMultistepScheduler,DiffusionPipeline,StableDiffusionPipeline
 import os
 import cv2
+from textblob import Word
 from string import punctuation
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
@@ -237,6 +238,13 @@ def analyze():
         params4 = strip_punctuation(finaltext)
         params3='Remove Punctuations'
         return render_template('analyze.html', purpose=params3, analyzed_text=params4)
+    ####------------------------------Spell Checker--------------------------------------#####
+    elif (spell == "on"):
+        w = Word(finaltext)
+        check = w.spellcheck()
+        param5 = 'Spell Check'
+        params6=check
+        return render_template('analyze.html', purpose=param5, analyzed_text=params6)
     else :
         return "Error"
 app.run(debug=True)
