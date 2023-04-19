@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}
+Predicted
+{% endblock %}
+{% block content %}
+ <h1>Original Image</h1>
+    <img src="{{ url_for('static', filename='images/' + file_name) }}" alt="original image">
+    <h1>Predicted Result</h1>
+     <img src="{{ result_path }}" alt="Processed image">
+{% endblock %}

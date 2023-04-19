@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+Answer
+{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+   <h1 style="color:white">Your Analyzed Text -- {{purpose}}</h1><br>
+  <h2 style="color:white">Output</h2><br>
+<p style="color:white">
+    {{ answer }}
+</p></div>
+{% endblock %}

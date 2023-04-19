@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+Images
+{% endblock %}
+{% block content %}
+
+<!--<div class="col-sm">
+    <h1>Enhanced Image</h1>
+        <img src="{{ result_path }}" alt="Enhanced image">
+</div>-->
+        <h1 style="color:white">Predicted Result</h1>
+        {% if model_type == "classification" %}
+<table style="margin:3px; border:2px solid black;">
+    <thead><tr style="background-color: #7cc3a97d"><th> Label</th><th> Probability</th></tr></thead>
+
+            <tbody>
+                {% for label, prob in result %}
+                <tr style="background-color: aliceblue"><td style="padding: 1rem; border:2px solid black;">{{ label }}</td>
+      <td style="padding:1rem; border:2px solid black;">{{ prob }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+           <img src="{{result}}" alt="Predicted Image" width="540px">
+        {% endif %}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,68 @@
+
+{% extends "base.html" %}
+{% block title %}
+Images
+{% endblock %}
+{% block content %}
+<div class="col-sm">
+      <h1 style="text-align:center"><span class="badge badge-danger" >Solve Image Problems</span></h1><br><br>
+    </div>
+<div>
+    <img src="{{ url_for('static', filename='images/'+ filename) }}" alt="Uploaded image" width="540px">
+</div>
+    <div class="col-sm" style="color:white">
+      <form action="/predict" method="post" >
+            <input type="hidden" name="file_path" value="{{ filename }}">
+
+
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch1" value="semantic_seg">
+  <label class="custom-control-label" for="customSwitch1">Image Segmentation</label>
+</div>
+
+          <div class="custom-control custom-switch">
+  <input type="checkbox" name="model_type" class="custom-control-input" id="customSwitch2" value="obdetect">
+  <label class="custom-control-label" for="customSwitch2">Object Detection</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch3" value="classification">
+  <label class="custom-control-label" for="customSwitch3">Image Classification</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch4" value="lowlight">
+  <label class="custom-control-label" for="customSwitch4">Low light Enhancement</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch5" value="imgtext">
+  <label class="custom-control-label" for="customSwitch5">Image 2 Text</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch6" value="imblur">
+  <label class="custom-control-label" for="customSwitch6">Image Background Blur</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch7" value="imart">
+  <label class="custom-control-label" for="customSwitch7">Image SuperResolution</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch8" value="kdt">
+  <label class="custom-control-label" for="customSwitch8">Key Point Detection</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch9" value="dpt">
+  <label class="custom-control-label" for="customSwitch9">Depth Estimation</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch10" value="oldify">
+  <label class="custom-control-label" for="customSwitch10">Panoptic Segmentation</label>
+</div>
+          <div class="custom-control custom-switch">
+  <input type="checkbox"  name="model_type" class="custom-control-input" id="customSwitch11" value="ocr">
+  <label class="custom-control-label" for="customSwitch11">Image 2 OCR</label>
+</div>
+          <button type="submit" class="btn btn-dark mt-2">Predict</button><br>
+
+      </form>
+    </div>
+
+{% endblock %}
