@@ -4,7 +4,7 @@ import torch
 from numba import cuda
 from GPUtil import showUtilization as gpu_usage
 from functions import extract_contact_info,extract_airport_codes,first_to_third_person,translate_text
-from forms import RegisterForm,LoginForm
+from forms import RegisterForm,LoginForm,RequestResetForm,ResetPasswordForm
 from models import User
 from flask_login import login_user,logout_user,current_user, login_required
 from flask_mail import Message
@@ -106,4 +106,20 @@ def send_reset_email(user):
 If you did not make this request then simply ignore this email and no changes will be made.
 '''
     mail.send(msg)
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_reset_email(user)
+            flash('An email has been sent with instructions to reset your password.', 'info')
+            return redirect(url_for('login'))
+        else:
+            flash('There is no account with that email. You must register first.', 'warning')
+            return redirect(url_for('reset_request'))
+    return render_template('reset.html', title='Reset Password', form=form)
+
 app.run(debug=True)
