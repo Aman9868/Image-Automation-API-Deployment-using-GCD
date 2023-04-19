@@ -11,7 +11,9 @@ from flask_mail import Message
 from stop_words import get_stop_words
 import nltk
 from nltk.tokenize import word_tokenize
-
+from diffusers import LDMSuperResolutionPipeline,DPMSolverMultistepScheduler,DiffusionPipeline,StableDiffusionPipeline
+import os
+import cv2
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -206,6 +208,27 @@ def analyze():
         params1 = 'Removed Stopwords'
         params2=result
         return render_template('analyze.html',purpose=params1,analyzed_text=params2)
+    ######-----------------Text2Video---------------------------------------##############
+    elif vimage=="on":
+        # load pipeline
+        pipe = DiffusionPipeline.from_pretrained("damo-vilab/text-to-video-ms-1.7b", torch_dtype=torch.float16, variant="fp16")
+        pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+# optimize for GPU memory
+        pipe.enable_model_cpu_offload()
+        pipe.enable_vae_slicing()
+        #generate
+        prompt = finaltext
+        frames = pipe(prompt, num_inference_steps=25, num_frames=200).frames
+        # save frames as video using OpenCV
+        output_file = os.path.join(app.config['OUTPUT_FOLDER'], 'output.mp4')
+        height, width, _ = frames[0].shape
+        fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+        video_writer = cv2.VideoWriter(output_file, fourcc, 30, (width, height))
+        for frame in frames:
+            video_writer.write(frame)
+        video_writer.release()
+
+        return render_template('analyze.html', video_path=output_file)
     else :
         return "Error"
 app.run(debug=True)
