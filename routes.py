@@ -306,6 +306,11 @@ def analyze():
         param22=extract_contact_info(finaltext)
         param23 = 'Extract Contact Information'
         return render_template('analyze.html', purpose=param23, analyzed_text=param22)
+    ##############----------------------Airport Code Extractor------------------------##################
+    elif (acode=="on"):
+        param25 = 'Extract Airport Code'
+        param24 = extract_airport_codes(finaltext)
+        return render_template('analyze.html', purpose=param25, analyzed_text=param24)
     else :
         return "Error"
 app.run(debug=True)
