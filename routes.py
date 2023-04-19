@@ -19,6 +19,8 @@ from string import punctuation
 from transformers import pipeline,AutoTokenizer, AutoModelForQuestionAnswering
 from flair.data import Sentence
 from flair.models import SequenceTagger
+from PIL import Image, ImageDraw
+from keras_cv.models import StableDiffusion
 #### -----------------------CUDA Description--------------------##############################3
 if torch.cuda.is_available():
     device_count = torch.cuda.device_count()
@@ -311,6 +313,13 @@ def analyze():
         param25 = 'Extract Airport Code'
         param24 = extract_airport_codes(finaltext)
         return render_template('analyze.html', purpose=param25, analyzed_text=param24)
+    ###########-------------------Text2 Image-----------------------------------####
+    elif (timage=="on"):
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        model=StableDiffusion()
+        img=model.text_to_image(finaltext)
+        img=Image.fromarray(img[0]).save('static/output/output.jpg')
+        return render_template("analyze.html", img_filename='output.jpg')
     else :
         return "Error"
 app.run(debug=True)
