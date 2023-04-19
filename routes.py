@@ -347,6 +347,18 @@ def analyze():
         data=[{"text":text,'score':score} for text,score in t4]
         print(data)
         return render_template('yol.html',data=data)
+    #######--------------------TEXT 2 SQL GENERATOR -----------------------------------######
+
+    elif (sqr=="on"):
+        tokenizer = AutoTokenizer.from_pretrained("mrm8488/t5-base-finetuned-wikiSQL")
+        model = AutoModelWithLMHead.from_pretrained("mrm8488/t5-base-finetuned-wikiSQL")
+        input_text = "translate English to SQL: %s </s>" % finaltext
+        features = tokenizer([input_text], return_tensors='pt')
+        output = model.generate(input_ids=features['input_ids'], 
+               attention_mask=features['attention_mask'])
+        param32=tokenizer.decode(output[0])
+        param33 = 'SQL Generator'
+        return render_template('analyze.html', purpose=param33, analyzed_text=param32)
     else :
         return "Error"
 app.run(debug=True)
